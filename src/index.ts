@@ -117,7 +117,10 @@ client.on("message", async (message) => {
     const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setTitle(`:sparkles: ${command.info.title}`)
       .setColor("RANDOM")
-      .setDescription(command.info.res);
+      .setDescription(command.info.res)
+      // @ts-ignore
+      .setFooter("", client.user.displayAvatarURL({ dynamic: false }))
+      .setTimestamp();
     return message.channel.send(embed);
   } catch (e) {
     console.error(e);
