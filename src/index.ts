@@ -16,12 +16,14 @@ const config: {
 class Client extends Discord.Client {
   commands: Discord.Collection<string, Command>;
   aliases: Discord.Collection<string, string>;
+  res: Discord.Collection<string, string>;
 
   constructor(options?: Discord.ClientOptions) {
     super(options);
 
     this.commands = new Discord.Collection();
     this.aliases = new Discord.Collection();
+    this.res = new Discord.Collection();
   }
 
   resolveCommand(name: string) {
@@ -41,6 +43,7 @@ export type CommandRun = (
 
 export interface CommandHelp {
   name: string;
+  title: string;
   res: string;
   aliases: string[];
   category?: string;
@@ -107,14 +110,16 @@ client.on("message", async (message) => {
   if (!command) return;
 
   try {
-    const embed: Discord.MessageEmbed = new Discord.MessageEmbed().setTitle(
-      "hello"
-    );
+    console.log(`${message.author.tag} used ${command.info.name}`);
+    const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
+      .setTitle(`:sparkles: ${command.info.title}`)
+      .setColor("RANDOM")
+      .setDescription(command.info.res);
     return message.channel.send(embed);
   } catch (e) {
     console.error(e);
     message.channel.send(
-      `Something went wrong while executing command "**${command}**"!`
+      `hey hey <@457805013474082817>, fix this: \`\`\`${command} ERROR: \n${e}\`\`\``
     );
   }
 });
