@@ -119,7 +119,16 @@ client.on("message", async (message) => {
       .setColor("RANDOM")
       .setDescription(command.info.res)
       // @ts-ignore
-      .setFooter("", client.user.displayAvatarURL({ dynamic: false }))
+      .setFooter(
+        message.author.tag,
+        // @ts-ignore
+        message.author.avatarURL({
+          // @ts-ignore
+          type: "png",
+          dynamic: true,
+          size: 2048,
+        })
+      )
       .setTimestamp();
     return message.channel.send(embed);
   } catch (e) {
