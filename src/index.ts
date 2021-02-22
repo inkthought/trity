@@ -94,6 +94,8 @@ fs.readdir("./commands", (error, ctg) => {
 // basic events
 client.on("ready", () => {
   console.log("Trity is ready.");
+  // @ts-ignore
+  client.user.setActivity("inkthought", { type: "WATCHING" });
 });
 client.on("warn", console.warn);
 client.on("error", console.error);
