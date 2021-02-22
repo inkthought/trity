@@ -3,7 +3,7 @@
 ////////////////////////////////////////////
 
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 import Discord from "discord.js";
 import fs from "fs";
@@ -62,7 +62,8 @@ fs.readdir("./commands", (error, ctg) => {
   if (error) throw error;
 
   // loop through ctg
-  ctg.forEach((category) => {
+  ctg.forEach((category: string) => {
+    console.log("Loading " + category + "...");
     // read each ctg and get command file
     fs.readdir(`./commands/${category}`, (err, commands) => {
       if (err) throw err;
@@ -77,7 +78,7 @@ fs.readdir("./commands", (error, ctg) => {
         cmd.info.category = category;
         cmd.location = `./commands/${category}/${command}`;
 
-        console.log(`loaded ${command}`);
+        console.log(`- Loaded ${command}`);
 
         // load command in memory
         client.commands.set(cmd.info.name, cmd);
