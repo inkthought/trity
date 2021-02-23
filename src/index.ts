@@ -143,5 +143,3 @@ client.on("message", async (message) => {
 
 const TOKEN: string | undefined = process.env.TOKEN;
 client.login(TOKEN);
-
-export default client;
