@@ -44,12 +44,13 @@ export type CommandRun = (
 export interface CommandHelp {
   name: string;
   title: string;
-  res: string;
+  res: string | string[];
   aliases: string[];
   category?: string;
 }
 
 export interface Command {
+  run?: CommandRun;
   info: CommandHelp;
   location?: string;
 }
@@ -63,7 +64,7 @@ fs.readdir("./commands", (error, ctg) => {
 
   // loop through ctg
   ctg.forEach((category: string) => {
-    console.log("Loading " + category + "...");
+    console.log("Read " + category);
     // read each ctg and get command file
     fs.readdir(`./commands/${category}`, (err, commands) => {
       if (err) throw err;
@@ -114,6 +115,7 @@ client.on("message", async (message) => {
 
   try {
     console.log(`${message.author.tag} used ${command.info.name}`);
+    if (command.run) return await command.run(client, message, args);
     const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setTitle(`:sparkles: ${command.info.title}`)
       .setColor("RANDOM")
@@ -141,3 +143,5 @@ client.on("message", async (message) => {
 
 const TOKEN: string | undefined = process.env.TOKEN;
 client.login(TOKEN);
+
+export default client;
