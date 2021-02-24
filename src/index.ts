@@ -5,6 +5,8 @@
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
+import print from "./utils/print";
+
 import Discord from "discord.js";
 import fs from "fs";
 
@@ -64,7 +66,7 @@ fs.readdir("./commands", (error, ctg) => {
 
   // loop through ctg
   ctg.forEach((category: string) => {
-    console.log("Read " + category);
+    print("Read " + category);
     // read each ctg and get command file
     fs.readdir(`./commands/${category}`, (err, commands) => {
       if (err) throw err;
@@ -79,7 +81,7 @@ fs.readdir("./commands", (error, ctg) => {
         cmd.info.category = category;
         cmd.location = `./commands/${category}/${command}`;
 
-        console.log(`- Loaded ${command}`);
+        print(`- Loaded ${command}`);
 
         // load command in memory
         client.commands.set(cmd.info.name, cmd);
@@ -94,7 +96,7 @@ fs.readdir("./commands", (error, ctg) => {
 
 // basic events
 client.on("ready", () => {
-  console.log("Trity is ready.");
+  print("Trity is ready.");
   // @ts-ignore
   client.user.setActivity("inkthought", { type: "WATCHING" });
 });
@@ -114,7 +116,7 @@ client.on("message", async (message) => {
   if (!command) return;
 
   try {
-    console.log(`${message.author.tag} used ${command.info.name}`);
+    print(`${message.author.tag} used ${command.info.name}`);
     if (command.run) return await command.run(client, message, args);
     const embed: Discord.MessageEmbed = new Discord.MessageEmbed()
       .setTitle(`:sparkles: ${command.info.title}`)
