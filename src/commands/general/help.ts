@@ -68,8 +68,18 @@ const Command: CMD = {
           value: sorted[0].honkers.join(", "),
           inline: true,
         }
-      );
-
+      )
+      .setFooter(
+        message.author.tag,
+        // @ts-ignore
+        message.author.avatarURL({
+          // @ts-ignore
+          type: "png",
+          dynamic: true,
+          size: 2048,
+        })
+      )
+      .setTimestamp();
     return message.channel.send(embed);
   },
   info: {
