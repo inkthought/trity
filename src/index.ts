@@ -97,8 +97,10 @@ fs.readdir("./commands", (error, ctg) => {
 // basic events
 client.on("ready", () => {
   print("Trity is ready.");
-  // @ts-ignore
-  client.user.setActivity("inkthought", { type: "WATCHING" });
+  setInterval(() => {
+    // @ts-ignore
+    client.user.setActivity("inkthought", { type: "WATCHING" });
+  }, 900000);
 });
 client.on("warn", console.warn);
 client.on("error", console.error);
